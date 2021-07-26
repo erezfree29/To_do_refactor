@@ -1,4 +1,12 @@
 const completed = (() => {
+  function checkTaskStatus(element) {
+    if (element.completed === false) {
+      element.completed = true;
+    } else {
+      element.completed = false;
+    }
+  }
+
   let tasksArray = [];
   if (localStorage.getItem('tasksListArray') != null) {
     tasksArray = JSON.parse(localStorage.getItem('tasksListArray'));
@@ -13,11 +21,7 @@ const completed = (() => {
     liDescription.innerHTML = '<input type="checkbox" class="task_name"><a href="#" class="edit"><i class="fas fa-ellipsis-v"></i></a>';
     liDescription.firstChild.id = tasksArray[i].description;
     liDescription.addEventListener('change', () => {
-      if (tasksArray[i].completed === false) {
-        tasksArray[i].completed = true;
-      } else {
-        tasksArray[i].completed = false;
-      }
+      checkTaskStatus(tasksArray[i]);
       localStorage.setItem('tasksListArray', JSON.stringify(tasksArray));
       const clear = document.querySelector('.clear');
       clear.addEventListener('click', () => {
