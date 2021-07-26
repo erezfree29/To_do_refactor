@@ -7,6 +7,15 @@ const completed = (() => {
     }
   }
 
+  function deleteElement(element, array) {
+    for (let i = 0; i < array.length; i += 1) {
+      if (element.completed === true) {
+        element.splice(i, 1);
+        i -= 1;
+      }
+    }
+  }
+
   let tasksArray = [];
   if (localStorage.getItem('tasksListArray') != null) {
     tasksArray = JSON.parse(localStorage.getItem('tasksListArray'));
@@ -25,12 +34,7 @@ const completed = (() => {
       localStorage.setItem('tasksListArray', JSON.stringify(tasksArray));
       const clear = document.querySelector('.clear');
       clear.addEventListener('click', () => {
-        for (let i = 0; i < tasksArray.length; i += 1) {
-          if (tasksArray[i].completed === true) {
-            tasksArray.splice(i, 1);
-            i -= 1;
-          }
-        }
+        deleteElement(tasksArray[i], tasksArray);
         localStorage.setItem('tasksListArray', JSON.stringify(tasksArray));
         window.location.reload();
       });
